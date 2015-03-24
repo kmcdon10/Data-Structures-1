@@ -1,4 +1,6 @@
-// Directions posted on the following webpage: http://facsrv.cs.depaul.edu/~cmiller/csc402/materials/assn1.html
+// This is part two of assignement one. It's a simple problem that was intended let us become familiar with the syntax in java
+// Directions (in full) are posted on the following webpage: http://facsrv.cs.depaul.edu/~cmiller/csc402/materials/assn1.html
+
 /* Using the BagOWords class, write a program that analyzes these two short stores: The Cask of Amontillado and The Open Window. 
  * The program should produce a report with the following information:
  * The total number of words in the text
@@ -9,6 +11,8 @@
  * You may assume that these two files are in the data folder
  */
  
+package assn1;
+
 import stdlib.In;
 import stdlib.StdOut;
 import week1.BagOWords;
@@ -18,7 +22,7 @@ public class Story {
   private final long start = 0;
    
 	public static void main(String[] args){
-     //Stopwatch timer1 = new Stopwatch();
+	   //Stopwatch timer1 = new Stopwatch();
      int wordCount1 = 0;
      BagOWords cask = new BagOWords();
      In fstream1 = new In("http://facsrv.cs.depaul.edu/~cmiller/csc402/code/cask_of_amontillado.txt");
@@ -41,7 +45,7 @@ public class Story {
       StdOut.printf("There are a total of %d unique words in the story.\n", cask.getSize());
       StdOut.printf("The ratio of unique words to total words in the text: %.5s \n", (cask.getSize()/(wordCount1 + 0.0)));
       StdOut.print("List of words that occur more than 2% of the time:\n");
-      
+            
       int min = (int) Math.ceil(.02 * wordCount1) ;
       String[] uniquelist = new String[cask.getSize()];
       uniquelist = cask.getWords();
@@ -51,7 +55,8 @@ public class Story {
          }
       }
       
-      // code begins for story analysis  2
+      // code begins for story  2
+      
       int wordCount2 = 0;
       BagOWords window = new BagOWords();
       In fstream2 = new In("http://facsrv.cs.depaul.edu/~cmiller/csc402/code/the_open_window.txt");
