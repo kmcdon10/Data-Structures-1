@@ -1,4 +1,4 @@
-// This is part two of assignement one. It's a simple problem that was intended let us become familiar with the syntax in java
+// This is part two of assignment one. It's quite basic. It was intended to help us familiarize ourselves with the syntax in java
 // Directions (in full) are posted on the following webpage: http://facsrv.cs.depaul.edu/~cmiller/csc402/materials/assn1.html
 
 /* Using the BagOWords class, write a program that analyzes these two short stores: The Cask of Amontillado and The Open Window. 
