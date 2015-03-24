@@ -9,3 +9,188 @@
  *                The method takes no arguments.
  * The class should generally work for hands of five cards, the code should also work for hands of other sizes with minimal
  * modification. In other words, it should make use of loops with index variables instead of hard-coded references to each card in the hand.
+
+package assn2;
+
+import week2.Card;
+
+public class PokerHand {
+
+	  private Card[] hand;
+	  private int numCards;
+
+	  private final static char[] RANKS = { '2', '3', '4', '5', '6', '7', '8', '9',
+	      'T', 'J', 'Q', 'K', 'A' };
+	  private final static char[] SUITS = { 'C', 'S', 'D', 'H' };
+	  	  
+	  public PokerHand(){
+		  //DeckOfCards();
+		  hand = new Card[5];  //creates a basic array size 5 to hold handful of cards
+		  numCards = 0;		  // tracks number of cards in one hand
+	  }
+
+	  public void add(Card c){
+		  //takes a Card object as an argument and adds a Card argument to the hand
+		  if (numCards == hand.length) {
+		        // if a larger capacity is required, creates a new array for the deck
+		        resize(hand.length * 2);
+		  }
+		  // if hand is empty, assigns first card
+		  if (numCards == 0){ 
+			  hand[0] = c;
+			  numCards++;
+		  }
+		  // adds card to back of the array
+		  else {
+			  hand[numCards] = c;
+			  numCards++;			
+		  }
+	  }
+	 
+	  public int size(){
+		  //returns the number of cards in a hand
+		  return numCards;
+	  }
+
+	  public boolean isFlush(){
+		  //returns true if hand is flush otherwise false
+		  char ch1 = hand[0].getSuit();
+		  
+		  for (int i = 0; i < numCards; i++){
+			  if (ch1 != hand[i].getSuit()){
+				  return false;
+			  }
+		  }
+		  return true;		  
+	  }
+	  	  
+	  public boolean isStraight(){
+		  // returns true if the cards can be arranged so that their ranks are
+		  // all in sequence (Ace can be low or high), false otherwise
+		  sort();
+		  int aces = 1; //used to reduce iterations when using the low ace
+		  for (int k = 0; k < numCards-1; k++){
+			  if (hand[k+1].getRankValue() == 14){
+				  aces += 1;
+			  }
+		  }
+		  // tests whether a low ace should be used.
+		  // If an Ace and a Two are present, uses the low ace. Otherwise skips ahead to else
+		  if ((hand[numCards-1].getRankValue() == 14) && hand[0].getRankValue() == 2){
+			  for (int i = numCards-aces; i > 0; i--){ 
+				  if ((hand[i].getRankValue() - hand[i-1].getRankValue()) >= 2){
+					  return false;
+				  }
+			  } 
+		  }
+		  
+		  else{ // default test for a straight using the ace as a high card if present
+		  for (int i = numCards-1; i > 0; i--){			  
+			  if ((hand[i].getRankValue() - hand[i-1].getRankValue()) >= 2){
+				  return false;
+			  }
+		  	}
+		  }
+		  return true;
+	  }
+	  
+	  public void sort() {
+		// basic sort taken from card.java - used to sort hand by rank
+		  for (int i = 0; i < numCards - 1; i++) {
+			  int lowRankPos = i;
+		      for (int j = i; j < numCards; j++) {
+		    	  if (hand[lowRankPos].getRankValue() > hand[j].getRankValue()) {
+		    		  lowRankPos = j;
+		        }
+		      }
+		      Card temp = hand[i];
+		      hand[i] = hand[lowRankPos];
+		      hand[lowRankPos] = temp;
+		    }
+		  }
+	
+	  public boolean isFullHouse(){
+		  // isFullHouse accepts no arguments and only works for hands with 3 or fewer unique ranking cards
+	   // Returns true if the hand has 2 cards of one rank and 3 cards of another rank
+	    
+	    int[] countList = new int[14];
+	    int[] rankList = new int[14];
+	     
+		  int sumRank1 = 1;
+		  int sumRank2 = 1;
+		  int sumRank3 = 1;
+      int rank1 = hand[0].getRankValue(); // Accommodates two possible ranks. Assumes hand size 5
+      int rank2 = 0; 
+      int rank3 = 0;
+		  
+		  if (numCards < 5){ // If fewer than 5 cards in the hand, returns false
+			  return false;
+		  }
+		  
+		  for (int indx = 1; indx < numCards; indx++){ 		// sums the number of each rank
+			  if (hand[indx].getRankValue() == rank1){
+				  sumRank1++;
+			  }
+			  else if (hand[indx].getRankValue() == rank2){
+			     sumRank2++;
+			  }
+			  else if (hand[indx].getRankValue() == rank3){
+			     sumRank3++;
+			  }
+			  else if (rank2 == 1){
+			     rank2 = hand[indx].getRankValue();
+			  }
+			  else{
+			     rank3 = hand[indx].getRankValue();
+			  }
+		  }
+
+		  if ((sumRank1 > 1 || sumRank2 > 1 || sumRank3 > 1) && ((sumRank1 > 2 || sumRank2 > 2 || sumRank3 > 2))){
+			  return true;
+		  }
+		  
+			return false;
+	  }
+	  	  
+	  private void resize(int newSize) {
+		    Card[] newDeck = new Card[newSize];
+
+		    for (int i = 0; i < newSize && i < numCards; i++) {
+		      newDeck[i] = hand[i];
+		    }
+		    hand = newDeck;
+		  }
+	  
+	  public static void main(String[] args) {
+		  // use for testing code    
+	     PokerHand myhand = new PokerHand();
+		   Card one = new Card('2','C');
+		   Card two = new Card('3','S');
+		   Card three = new Card('4','H');
+		   Card four = new Card('4','S');
+		   Card five = new Card('4','H');
+       Card six = new Card('3','D');
+       
+       myhand.add(one);
+		   myhand.add(two);
+		   myhand.add(three);
+		   myhand.add(four);
+       myhand.add(five);
+       myhand.add(six);	
+       myhand.add(one);
+       myhand.add(two);
+       myhand.add(three);
+       myhand.add(four);
+       myhand.add(five);
+       myhand.add(six); 
+       
+		   System.out.println("Number of cards in your hand " + myhand.size());
+		   System.out.println("Is a flush: " + myhand.isFlush());
+		   System.out.println("Is a straight: " + myhand.isStraight());
+		   System.out.println("Is a full house: " + myhand.isFullHouse());
+		   
+		    
+	  }
+	  
+	  
+}
