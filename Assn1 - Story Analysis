@@ -91,5 +91,4 @@ public class Story {
     
     //StdOut.println("\nTime: " + timer1.elapsedTime());
 	}
-
 }
