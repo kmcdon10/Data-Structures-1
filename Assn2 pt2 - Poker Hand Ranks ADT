@@ -1,0 +1,11 @@
+/* Directions: Create a class called PokerHand that consists of Card objects. It should provide the following instance methods:
+ * add -- this method takes a Card object as an argument and adds it to the hand.
+ * size -- this method takes no arguments and returns the number of cards in the hand.
+ * isFlush -- this method returns true if the hand is a flush (all cards have the same suit), false otherwise. The method takes
+ *            no arguments.
+ * isStraight -- this method returns true if the cards can be arranged so that their ranks are all in sequence (Ace can be low 
+ *               or high), false otherwise. The method takes no arguments.
+ * isFullHouse -- this method returns true if the hand has 2 cards of one rank and 3 cards of another rank, false otherwise. 
+ *                The method takes no arguments.
+ * The class should generally work for hands of five cards, the code should also work for hands of other sizes with minimal
+ * modification. In other words, it should make use of loops with index variables instead of hard-coded references to each card in the hand.
