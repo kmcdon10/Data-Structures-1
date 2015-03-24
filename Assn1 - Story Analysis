@@ -9,3 +9,82 @@
  * You may assume that these two files are in the data folder
  */
  
+import stdlib.In;
+import stdlib.StdOut;
+import week1.BagOWords;
+import stdlib.Stopwatch;
+
+public class Story {
+  private final long start = 0;
+   
+	public static void main(String[] args){
+     //Stopwatch timer1 = new Stopwatch();
+     int wordCount1 = 0;
+     BagOWords cask = new BagOWords();
+     In fstream1 = new In("http://facsrv.cs.depaul.edu/~cmiller/csc402/code/cask_of_amontillado.txt");
+     String [] templist = fstream1.readAllStrings();
+     String [] list1 = new String[templist.length];
+     int k = 0;
+     for (int i = 0; i < templist.length; i++){
+       String strippedCode = templist[i].replaceAll("[^\\p{L}]","").toLowerCase();
+       templist[i] = strippedCode;
+       if (templist[i].length() > 0 && Character.isLetter(templist[i].charAt(0))){
+          list1[k] = templist[i];
+          cask.addWord(list1[k]);
+          wordCount1++;
+          k++;
+       }
+     }
+      
+      StdOut.print("The Cask of Amontillado \n");
+      StdOut.printf("There are a total of %d words in the story.\n", wordCount1);
+      StdOut.printf("There are a total of %d unique words in the story.\n", cask.getSize());
+      StdOut.printf("The ratio of unique words to total words in the text: %.5s \n", (cask.getSize()/(wordCount1 + 0.0)));
+      StdOut.print("List of words that occur more than 2% of the time:\n");
+      
+      int min = (int) Math.ceil(.02 * wordCount1) ;
+      String[] uniquelist = new String[cask.getSize()];
+      uniquelist = cask.getWords();
+      for(int m = 0; m < uniquelist.length; m++){
+         if (cask.getCount(uniquelist[m]) >= min){
+            StdOut.print("word: " + uniquelist[m] + "\n");
+         }
+      }
+      
+      // code begins for story analysis  2
+      int wordCount2 = 0;
+      BagOWords window = new BagOWords();
+      In fstream2 = new In("http://facsrv.cs.depaul.edu/~cmiller/csc402/code/the_open_window.txt");
+      String [] templist2 = fstream2.readAllStrings();
+      String [] list2 = new String[templist2.length];
+      int n = 0;
+      for (int i = 0; i < templist2.length; i++){
+        String strippedCode = templist2[i].replaceAll("[^\\p{L}]","").toLowerCase();
+        templist2[i] = strippedCode;
+        if (templist2[i].length() > 0 && Character.isLetter(templist2[i].charAt(0))){
+           list2[n] = templist2[i];
+           window.addWord(list2[n]);
+           wordCount2++;
+           n++;
+        }
+      }
+			
+		StdOut.print("\nThe Open Window \n");
+		StdOut.printf("There are a total of %d words in the story.\n", wordCount2);
+		StdOut.printf("There are a total of %d unique words in the story.\n", window.getSize());
+		StdOut.printf("The ratio of unique words to total words in the text: %.5s \n", (window.getSize()/(wordCount2 + 0.0)));
+		StdOut.print("List of words that occur more than 2% of the time:\n");
+
+    int min2 = (int) Math.ceil(.02 * wordCount2) ;
+    String[] uniquelist2 = new String[window.getSize()];
+    uniquelist2 = window.getWords();
+    for(int m = 0; m < uniquelist2.length; m++){
+       if (window.getCount(uniquelist2[m]) >= min2){
+          StdOut.print("word: " + uniquelist2[m] + "\n");
+       }
+    }
+    
+    //StdOut.println("\nTime: " + timer1.elapsedTime());
+	}
+
+}
