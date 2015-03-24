@@ -1,0 +1,11 @@
+// Directions posted on the following webpage: http://facsrv.cs.depaul.edu/~cmiller/csc402/materials/assn1.html
+/* Using the BagOWords class, write a program that analyzes these two short stores: The Cask of Amontillado and The Open Window. 
+ * The program should produce a report with the following information:
+ * The total number of words in the text
+ * The number of different words
+ * The ratio of the number of different words to the total number of words
+ * The list of words (in any order) that occur more than 2% of the time and the percentage that they occur.
+ * The main method of your program should write the report to standard output. 
+ * You may assume that these two files are in the data folder
+ */
+ 
