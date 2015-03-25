@@ -1,0 +1,6 @@
+/* Directions: Using the AltString class as a starting point, write the compareTo method so that strings are first sorted by 
+ * their length (shortest to longest) and then, for strings of equal length, in lexicographic order. 
+ * Write a comparator for the string class so that strings are first sorted by their length (shortest to longest) and then,
+ * for strings of equal length, in lexicographic order.
+ * Write a main method in a CompareDemo class that demonstrates that your code from the previous two questions works.
+ */
