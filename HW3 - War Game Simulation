@@ -7,3 +7,41 @@
  *  Your main method should simulate 10,000 games and report the average number of rounds 
  */
  
+
+         if ((value1 > value2) & order){
+            // give cards to player1 in random rank order
+            if (order){
+               hand1.enqueue(card1);
+               hand1.enqueue(card2);
+            }
+            else{
+               hand1.enqueue(card2);
+               hand1.enqueue(card1);
+            }
+         }		
+         else if (value1 < value2){
+            // give cards to player 1 in random rank order
+            if (order){
+               hand2.enqueue(card1);
+               hand2.enqueue(card2);
+            }
+            else{
+               hand2.enqueue(card2);
+               hand2.enqueue(card1);
+            }
+         }
+         else{
+            // choose random winner with 50% probability
+            // give cards to winner (rank's are equal so order doesn't matter)
+            if (order){
+               hand1.enqueue(card1);
+               hand1.enqueue(card2);
+            }
+            else{
+               hand2.enqueue(card2);
+               hand2.enqueue(card1);
+            }
+         }
+         numRounds++;
+      }
+   }
