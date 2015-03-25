@@ -1,0 +1,5 @@
+/* Directions: Write a class called HeapCheck that has a method that takes an array of float values and indicates whether
+ * the array represents a min-heap, a max-heap or no heap. If all values are the same, your code may simply indicate that 
+ * it's a min-heap. Your main method should demonstrate that your code works correctly.
+ */
+ 
