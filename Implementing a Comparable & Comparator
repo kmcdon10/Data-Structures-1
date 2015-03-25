@@ -4,3 +4,82 @@
  * for strings of equal length, in lexicographic order.
  * Write a main method in a CompareDemo class that demonstrates that your code from the previous two questions works.
  */
+
+package assn6;
+
+import java.util.Arrays;
+import java.util.Comparator;
+
+import algs21.Insertion;
+import stdlib.In;
+import stdlib.StdOut;
+
+public class AltString implements Comparable<AltString>, Comparator<String>
+{
+   String internalStr;
+
+   public AltString(String str) {
+      internalStr = str;
+   }
+
+   public String toString() {
+      return internalStr;
+   }
+
+   public int compareTo(AltString altStr2) {
+      // Compares the length of this AltString with the length of the AltString parameter for later ordering. Returns -1 if less then. Otherwise returns 1
+      // If lengths are equal, the function then makes a comparison based on alphabetical order  
+      if(altStr2.toString().length() < this.toString().length()){
+         return 1;
+      }
+      else if (altStr2.toString().length() > this.toString().length()){
+         return -1;
+      }
+      return -(altStr2.toString().compareToIgnoreCase(this.toString()));	
+   }
+
+   @Override
+   public int compare(String o1, String o2) {
+      // TODO Auto-generated method stub
+      return 0;
+   }
+
+   public static void main(String[] args) {
+      // some test code for the AltString class
+      String [] list = new In("data/tinyTale.txt").readAllStrings();
+      AltString [] alist = new AltString[list.length];
+      for (int i=0; i<alist.length; i++) {
+         alist[i] = new AltString(list[i]);
+      }
+
+      Arrays.sort(list, new Comparator<String>(){
+         // sorts an array of strings using a comparator
+         @Override
+         public int compare(String strOne, String strTwo) {
+            if (strOne.length() < strTwo.length()) {
+               return -1;
+            }
+            else if (strOne.length() > strTwo.length()) {
+               return 1;
+            }
+            else {
+               return (strOne.compareToIgnoreCase(strTwo)); 
+            }
+         }
+
+      });
+
+      Insertion.sort(alist);
+
+      StdOut.println("String sort:");
+      for (int i=0; i<alist.length; i++) {
+         StdOut.println(alist[i]);
+      }
+
+      StdOut.println("\nAltString sort:");
+      for (int i=0; i<list.length; i++) {
+         StdOut.println(list[i]);
+      }
+   }
+
+}
