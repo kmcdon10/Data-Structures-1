@@ -12,3 +12,220 @@
  * the bottom reference for all of your operations.
  */ 
 
+package assn4;
+
+/**
+ * A data type for simulating a packet of cards. <br>
+ *
+ * January 2015 <br>
+ * 
+ * @author Craig Miller
+ */
+public class PacketOfCards {
+   private Node top;
+   private Node bottom;
+   private int count = 0;
+
+   private class Node {
+      Card item;
+      Node next;
+   }
+
+   /**
+    * creates an empty pack of cards
+    */
+   public PacketOfCards() {
+      top = null;
+      bottom = null;
+   }
+
+   /**
+    * 
+    * @param c the card added to the top of the packet
+    */
+   public void addToTop(Card c) {
+      Node temp = new Node();
+      temp.item = c;
+      temp.next = top;
+      top = temp;
+      if (bottom == null) { //IF this is the first card, you have to 
+         bottom = temp; 	// make sure bottom is assigned as well
+      }
+      count++;
+   }
+
+   /**
+    * 
+    * @param c the card added to the bottom of the packet
+    */
+
+   public void addToBottom(Card c) {
+      Node temp = new Node();
+      temp.item = c;
+      temp.next = null;
+      count++;
+
+      if (this.top == null && this.bottom == null){
+         // tests whether the list is empty
+         // sets bottom & top equal to Card element
+         top = temp;
+         bottom = temp;
+         top.next = bottom;
+         bottom.next = null;
+         return;
+      }  
+      else {
+         this.bottom.next = temp;
+         bottom = temp;
+      }
+   }
+
+   /**
+    * 
+    * @return the number of cards in the packet
+    */
+
+   public int size() {
+      // to be implemented --- currently returns 1 to allow for compilation
+      // will need to create another instance variable and keep count via
+      // incrementing any time I add a card or decrementing whenever I remove one
+      return count;
+   }
+
+   public Card peekAtBottom(){
+      if (count == 0){
+         throw new RuntimeException("Item doesn't exist. There are no cards in the PacketOfCards.");
+      }
+      return bottom.item;
+   }
+
+   /**
+    * 
+    * @return the card drawn from the top of the packet
+    * @throws Exception 
+    */
+   public Card drawFromTop() {
+      count--;
+      if (top == bottom) {
+         bottom = null;
+      }
+      Node temp = top;
+      top = top.next;
+      return temp.item;
+   }
+
+   /**
+    * write out cards from top to bottom
+    */
+   public void write() {
+      write(top);
+      System.out.println();
+   }
+
+   private void write(Node current) {
+      if (current != null) {
+         System.out.print(current.item.toString() + " ");
+         write(current.next);
+      }
+   }
+
+   /**
+    * write out cards from bottom to top
+    */
+   public void reverseWrite() {
+      // to be implemented
+      if (count == 0){
+         throw new RuntimeException("Item doesn't exist. There are no cards in the PacketOfCards");
+      }
+      Card[] cards = new Card[count];
+      Node current = new Node();
+      current = top;
+      int counter = count;
+
+      for (int i = 0; i < counter; i++){
+         cards[i] = current.item;
+         current = current.next;  
+      }
+
+      for (int j = counter-1; j >= 0; j--){
+         System.out.print(cards[j] + " ");
+      }
+   }
+
+   /**
+    * 
+    * @param c any card object
+    * @return true if a matching card is in the packet, false otherwise
+    */
+   public boolean match(Card c) {
+      // 
+      Node current = new Node();
+      current = top;
+      int counter = count;
+      for (int i = 0; i < counter; i++){
+         Card temp = current.item;
+         if ((temp.getRank() == c.getRank()) && (temp.getSuit() == c.getSuit())){
+            return true;
+         }
+         current = current.next;
+      }
+      return false;
+
+   }
+
+   /**
+    * removes any cards whose rank are repeated from immediately preceding card
+    */
+   public void removeRepeatedRanks() {
+      // removes duplicate cards the are right next to each other in the deck
+      Node current = new Node();
+      current = top;
+
+      for (int i = 0; i < count-1; i++) {
+         if ((current.item.getRank() == current.next.item.getRank()) && (current.item.getSuit() == current.next.item.getSuit())) {
+            current.next = current.next.next;
+            count--;
+         }
+         current = current.next; 
+      }
+   }
+
+   public static void main(String[] args) {
+      // test code for PacketOfCards
+      DeckOfCards deck = new DeckOfCards();
+      PacketOfCards packet = new PacketOfCards();
+      //StdOut.println(packet.peekAtBottom());
+      for (int i = 0; i < 10; i++) {
+         Card c = deck.draw();
+         //Card c1 = c;
+         packet.addToTop(c);
+         //packet.addToBottom(c);
+      }
+      //StdOut.println(packet.peekAtBottom());
+
+      //for (int j = 0; j < 5; j++){
+      //	Card c = deck.draw();
+      //	packet.addToBottom(c);
+      //}
+
+      packet.write();
+      System.out.println();
+      //StdOut.println(packet.peekAtBottom());
+      //StdOut.println(packet.size());
+
+      for (int i = 0; i < 10; i++) {
+         System.out.println(packet.drawFromTop().toString());
+      }
+
+      //StdOut.println(packet.drawFromTop());
+      //StdOut.println(packet.drawFromTop());
+      //StdOut.println(packet.size());
+      //StdOut.println("Start reverse write");
+      //packet.reverseWrite();
+      //StdOut.println("\n");
+      //packet.removeRepeatedRanks();
+      //packet.reverseWrite();
+
+   } 
+
+}
