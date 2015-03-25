@@ -10,3 +10,91 @@
  *  If end of the file is reached and the stack is empty, then the file has properly nested tags (assuming all tests were 
  *  successful).
  */
+package assn3;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import stdlib.In;
+import algs13.Stack;
+
+public class WebParse {
+
+   public static Stack<String> stack = new Stack<String>();
+
+   public static void getFile() {
+      In tagsIn = new In("http://facsrv.cs.depaul.edu/~cmiller/csc402/code/sample.html");
+      String[] tags = tagsIn.readAllStrings();
+
+      for (int i = 0; i < tags.length; i++){
+         if (isOpeningTag(tags[i])) {
+            stack.push(tags[i]);
+         }
+         else if (isClosingTag(tags[i])){
+            String poppedTag = stack.pop();
+            //System.out.println("This is closing: " + tags[i]);
+            //System.out.println("This was popped: " + poppedTag);
+            if (isEquivalent(tags[i], poppedTag)){
+               //System.out.println("File Properly Nested");
+            }
+            else{
+               //System.out.println("File Isn't Properly Nested. Try Again");
+            }
+         }
+         else{
+            //System.out.print("Error. Something went wrong.");
+         }
+      }
+   }
+
+   public static boolean isOpeningTag(String token) {
+      if (token.charAt(1) != '/') {
+         return true;
+      }
+      return false;
+   }
+
+   public static boolean isClosingTag(String token) {
+      if (token.charAt(1) == '/') {
+         return true;
+      }
+      return false;
+   }
+
+   public static String getTagIdentifier(String token) {
+      Pattern tagPattern = Pattern.compile("&lt;/?(\\w+)&gt;");
+      Matcher m = tagPattern.matcher(token);
+      if (m.matches()) {
+         return m.group(1);
+      }
+      return "";
+   }
+
+   public static boolean isEquivalent(String closing, String opening) {
+      // checking if a tag is an equivalent opening tag
+
+      boolean value = false;
+
+      if (opening.length() != closing.length()) {
+         for (int i = 1; i < opening.length(); i++) {
+            if (opening.charAt(i) == closing.charAt(i + 1)) {
+               value = true;
+            }
+            else {
+               value = false;
+            }
+         }
+      }
+      return value;
+   }
+
+   public static void main(String[] args) {
+      // Area for testing code
+      getFile();
+//      System.out.println(isOpeningTag("<html>"));
+//      System.out.println(isClosingTag("</html>"));
+//      System.out.println(isClosingTag("<html>"));
+//      System.out.println(isOpeningTag("</body>"));
+//      System.out.println(isEquivalent("</strong>", "<html>"));
+   }
+
+}
