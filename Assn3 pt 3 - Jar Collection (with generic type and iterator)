@@ -3,3 +3,93 @@
  * The Jar class should automatically resize its underlying array by doubling it as needed. 
  */
 
+package assn3;
+
+import java.util.Iterator;
+
+public class Jar<Item> implements Iterable<Item> {
+
+   private int size = 0;
+   private Item[] list;
+   private Item[] newList;
+
+   @SuppressWarnings("unchecked")
+   public Jar(){
+      list = (Item []) new Object[10];
+   }
+
+   public void add(Item element){
+      if (size == list.length){
+         // double the size of the array
+         resize(list.length * 2);
+      }
+      else{
+         list[size] = element;
+         size++;
+      }		
+   }
+
+   @SuppressWarnings("unchecked")
+   private void resize(int newSize){
+
+      newList = (Item []) new Object[newSize];
+
+      for (int i = 0; i < newSize && i < size; i++){
+         newList[i] = list[i];
+      }
+      list = newList;
+   }
+
+   public int getCount(){
+      return size;
+   }
+
+   public Item draw(){
+      size--;
+      return list[size];
+
+   }
+
+   public boolean isEmpty(){
+      if (size == 0){
+         return true;
+      }
+      return false;
+   }
+
+   public Iterator<Item> iterator(){
+      return new JarIterator();
+   }
+
+   private class JarIterator implements Iterator<Item>{
+      private int index = 0;
+
+      public boolean hasNext(){
+         return index < size;
+      }
+
+      public Item next(){
+         Item tempElement = list[index];
+         index++;
+         return tempElement;
+      }
+   }
+
+   public static void main(String[] args) {
+      // test methods above
+      Jar<String> color = new Jar<String>();
+      color.add("gray");
+      color.add("blue");
+      color.add("green");
+
+      System.out.println("There are " + color.getCount() + " items in the bag");
+      System.out.println("Is the bag empty? " + color.isEmpty());
+
+      for (int i = 0; i <= color.getCount()+1; i++){
+         System.out.println(color.draw());
+      }
+
+      System.out.println("Is the bag empty? " + color.isEmpty());
+   }
+
+}
