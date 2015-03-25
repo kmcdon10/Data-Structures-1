@@ -7,9 +7,65 @@
  *  Your main method should simulate 10,000 games and report the average number of rounds 
  */
  
+package assn3;
 
-         if ((value1 > value2) & order){
-            // give cards to player1 in random rank order
+import week2.Card;
+import algs13.Queue;
+import java.util.Random;
+import stdlib.Stopwatch;
+
+public class War {
+
+   private static Card[] cards = new Card[52];
+   private final static char[] RANKS = { '2', '3', '4', '5', '6', '7', '8', '9',
+      'T', 'J', 'Q', 'K', 'A' };
+   private final static char[] SUITS = { 'C', 'S', 'D', 'H' };
+   private static Queue<Card> hand1 = new Queue<Card>();
+   private static Queue<Card> hand2 = new Queue<Card>();   
+   private static int numCards;
+   private static int numRounds = 0;
+
+   public static void createDeck(){
+      // this method creates an array of Cards made of a standard deck with 52 cards. 
+      for (int i = 0; i < RANKS.length; i++) {
+         cards[numCards] = new Card(RANKS[i], SUITS[0]);
+         cards[numCards+1] = new Card(RANKS[i], SUITS[1]);
+         cards[numCards+2] = new Card(RANKS[i], SUITS[2]);
+         cards[numCards+3] = new Card(RANKS[i], SUITS[3]);
+         numCards+=4;
+      }
+   }
+
+   public static void distributeCards(){
+      // this method randomly shuffles the deck and then distributes the cards equally between two players
+      // For more information about my choice of shuffle algorithm, look at the following link:
+      // https://blog.codinghorror.com/the-danger-of-naivete/
+      Random randomGenerator = new Random();
+      for (int i = numCards-1; i > 0; i--){
+         // this shuffles the deck. 
+         int randInt = randomGenerator.nextInt(i+1);
+         Card temp = cards[i];
+         cards[i] = cards[randInt];
+         cards[randInt] = cards[i];
+      }      
+      for (int j = 0; j <= 48; j+=4){
+         hand1.enqueue(cards[j]);  
+         hand1.enqueue(cards[j+1]); 
+         hand2.enqueue(cards[j+2]);  
+         hand2.enqueue(cards[j+3]);  
+      }
+   }
+
+   public static void battle(){
+      Random randomGenerator = new Random();
+      while (!(hand1.isEmpty() | hand2.isEmpty())){
+         Card card1 = hand1.dequeue();
+         Card card2 = hand2.dequeue();
+         int value1 = card1.getRankValue();
+         int value2 = card2.getRankValue();                 
+         boolean order = (randomGenerator.nextInt(100) % 2 == 0);
+
+         if (value1 > value2){
             if (order){
                hand1.enqueue(card1);
                hand1.enqueue(card2);
@@ -18,7 +74,7 @@
                hand1.enqueue(card2);
                hand1.enqueue(card1);
             }
-         }		
+         }    
          else if (value1 < value2){
             // give cards to player 1 in random rank order
             if (order){
@@ -38,10 +94,28 @@
                hand1.enqueue(card2);
             }
             else{
-               hand2.enqueue(card2);
                hand2.enqueue(card1);
+               hand2.enqueue(card2);
             }
          }
          numRounds++;
       }
    }
+
+   public static void simulateRounds(double num){
+      createDeck();
+      for (int i = 0; i < num; i++){
+         distributeCards();
+         battle();	
+      }
+      System.out.println("The average number of rounds: " + (int) (numRounds / num));
+   }
+
+   public static void main(String[] args) {
+      // area for testing code
+      Stopwatch timer = new Stopwatch();
+      simulateRounds(10000);
+      System.out.println("Time elapsed: " + timer.elapsedTime());
+   }
+
+}
