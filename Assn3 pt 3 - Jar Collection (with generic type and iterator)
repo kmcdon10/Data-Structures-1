@@ -1,0 +1,5 @@
+/* Directions: Write a Jar class that supports the same methods as the MarbleJar class, except this Jar class should work for
+ * any type. Also, add an iterator method so that it implements the iterable interface.
+ * The Jar class should automatically resize its underlying array by doubling it as needed. 
+ */
+
