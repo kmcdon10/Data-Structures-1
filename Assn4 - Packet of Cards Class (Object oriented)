@@ -1,0 +1,14 @@
+/* Directions: This assignment involves implementing methods on a linear linked list for a packet of Card objects.
+ * The PacketOfCards class has already been started for you. It includes the constructor and the methods addToTop,
+ * drawFromTop and write. This package includes the DeckOfCards class and the Card class. The Card class now has an equals 
+ * method added to it. Using the PacketOfCards class as a starting point, add the following instance methods:
+ *  size --- returns the number of cards in the packet
+ *  peekAtBottom --- returns the card at the bottom of the packet without removing it
+ *  reverseWrite --- write out the cards, separated by a space, from the bottom of the packet to the top
+ *  addToBottom --- takes a Card object as an argument and adds it to the bottom of the packet
+ *  match --- takes a Card object as an argument; returns true if the given card matches any card in the packet, false otherwise
+ *  removeRepeatedRanks --- removes any cards whose rank are repeated from the immediately preceding card
+ * Your implementation of these methods shouldn't break any of the current methods. For example, make sure that you maintain 
+ * the bottom reference for all of your operations.
+ */ 
+
