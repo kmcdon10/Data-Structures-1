@@ -1,0 +1,12 @@
+/* Directions: Use the Stack class in the alg13 package to check if a file has matching HTML tags consistent with the XHTML
+ * standard. You may assume the following simplications about the file:
+ *  The file only consists of simple opening and closing tags.
+ *  Tags just have simple identifiers (no attributes).
+ *  All tags are separated with white space (so that the readAllStrings successfully tokenizes and separates the tags).
+ * Using a stack of Strings, the following algorithm tests for properly nested XHTML tags:
+ *  If the tag is an opening tag, push its identifier on the stack.
+ *  If the tag is a closing tag, pop the stack and test if the resulting identifier matches that of the closing tag 
+ *  (if not, it's not properly nested).
+ *  If end of the file is reached and the stack is empty, then the file has properly nested tags (assuming all tests were 
+ *  successful).
+ */
