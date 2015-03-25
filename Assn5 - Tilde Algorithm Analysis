@@ -1,0 +1,13 @@
+/* Directions: Choose a problem that has at least two algorithms with difference performance classes. Possible problems include:
+ *  Append an item to the end of a linked list (with and without an end reference)
+ *  Adding an item to an array (at the beginning vs. at the end)
+ *  Sort an array of strings (e.g. Selection sort in package 2.1 vs. Merge sort in package 2.2)
+ *  Find median of integers (use sort vs. linear algorithm)
+ * Run experiments for your problem using the two algorithms. Your study should do the following:
+ *  Collect times for both algorithms with different input sizes (e.g. array sizes)
+ *  Test with reasonably representative input
+ *  Show a graph of performances at different sizes
+ *  Describe your process and explain the findings
+ *  Compare the empirical findings to that predicted by theoretical analysis
+ *  Produce practical advice on when the two approaches could be used
+ */
