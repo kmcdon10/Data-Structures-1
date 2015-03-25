@@ -1,11 +1,9 @@
-/* Directions: Use the Queue class in the alg13 package to simulate a simplified version of the playing card game frequently 
- * called War. The Queue represents a player's packet of cards and consist of Card objects, using the Card class provided in 
- class
-
-Your version should have the following (simpler) rules:
-
-When there is a tie, randomly choose (50% probability) which "player" winse.
-Randomly determine (50% probability) the order of the cards that are randomly placed at the end of the random player's queue.
-Rule #2 is important. Similar to the findings of this paper on the game, our simple version of the game won't terminate without the random placement.
-
-Call your class War. Your main method should simulate 10,000 games and report the average number of rounds 
+/* Directions: Use the Queue class in the alg13 package to simulate a simplified version of the playing card game called War.
+ * The Queue represents a player's packet of cards and consist of Card objects, using the Card class provided. 
+ * Your version should have the following (simpler) rules:
+ *  When there is a tie, randomly choose (50% probability) which "player" winse.
+ *  Randomly determine (50% probability) the order of the cards that are randomly placed at the end of the random player's queue.
+ *  Rule #2 is important. Similar to the findings of this paper on the game, our simple version of the game won't terminate without the random placement
+ *  Your main method should simulate 10,000 games and report the average number of rounds 
+ */
+ 
