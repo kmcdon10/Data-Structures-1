@@ -3,3 +3,87 @@
  * it's a min-heap. Your main method should demonstrate that your code works correctly.
  */
  
+ package assn7;
+
+public class HeapCheck {
+
+   public static String validHeap(float[] numList){
+      if (numList.length <= 2 | numList[0] != (float) 0.0){
+         // eliminates an array with only 1 element b/c it cannot be a min or max heap
+         return "not a heap";
+      }
+
+      if (numList[1] <= numList[2] | numList[1] <= numList[3]){
+         // testing for a min-heap
+         for (int i = 1; ((i * 2) +1) < numList.length; i++){
+            if (numList[i] > numList[i*2] | numList[i] > numList[(i*2)+1]){
+               return "not a heap";
+            }
+         }
+         return "min heap";
+      }
+      else if (numList[1] >= numList[2] | numList[1] >= numList[3]){
+         // testing for a max heap
+         for (int j = 1; ((j * 2) +1) < numList.length; j++){
+            if ((numList[j] < numList[j*2]) | (numList[j] < numList[(2*j)+1])){
+               return "not a heap";
+            }
+         }
+         return "max heap";
+      }
+      return "error. Something went wrong";
+   }
+
+
+   public static void main(String[] args) {
+      // area for testing code
+
+      //the following is a valid min heap
+      float[] num = new float[10];
+      num[1] = (float) 2.1;
+      num[2] = (float) 2.7;
+      num[3] = (float) 6.7;
+      num[4] = (float) 3.2;
+      num[5] = (float) 3.1;
+      num[6] = (float) 6.8;
+      num[7] = (float) 8.3;
+      num[8] = (float) 4.8;
+      num[9] = (float) 5.9; 
+      System.out.println(validHeap(num));
+
+      /*
+      // test code for heap with all the same numbers - should return min heap
+      float[] test = new float[5];
+      test[1] = (float) 2.1;
+      test[2] = (float) 2.1;
+      test[3] = (float) 2.1;
+      test[4] = (float) 2.1;
+      System.out.println(validHeap(test));
+       */
+
+      /*
+      // test code for a not a heap
+      float[] list = new float[7];
+      list[1] = (float) 2.3;
+      list[2] = (float) 5.3;
+      list[3] = (float) 4.1;
+      list[4] = (float) 4.7;
+      list[5] = (float) 4.9;
+      list[6] = (float) 7.8;
+      System.out.println(validHeap(list));
+       */  
+
+      /*
+      // test code for a max heap
+      float[] numList = new float[7];
+      numList[1] = (float) 4.3;
+      numList[2] = (float) 2.1;
+      numList[3] = (float) 2.3;
+      numList[4] = (float) 1.1;
+      numList[5] = (float) 1.9;
+      numList[6] = (float) 2.2;
+      System.out.println(validHeap(numList));
+       */
+   }
+
+}
