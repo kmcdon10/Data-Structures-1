@@ -11,3 +11,203 @@
  * For any other regular square, don't apply a bonus
  * Ex: the method call scoreWord("QUICK", "d____T") should return a score of 90
 */
+
+package assn1;
+
+import stdlib.In;
+import stdlib.Stopwatch;
+
+public class Score{
+   private static String[] dictionary;
+
+   public static boolean underScore(String word, int index){
+      String temp = word.toLowerCase();
+      word = temp;
+      String[] alphabet = {"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
+      boolean valid = false;
+
+      int i = 0;
+      while (i < alphabet.length & valid == false){
+         valid = isValid(word.substring(0, index) + alphabet[i] + word.substring(index + 1, word.length()));
+         i++;
+      }
+      return valid;
+   }
+
+   public static boolean isValid(String searchKey){      
+      In fstream = new In("http://www-01.sil.org/linguistics/wordlists/english/wordlist/wordsEn.txt");
+      dictionary = fstream.readAllStrings();
+
+      int count = 0;
+      int lo = 0;
+      int hi =  dictionary.length-1;
+
+      while (lo <= hi){
+         int mid = (lo + hi) / 2;
+         if (searchKey.compareTo(dictionary[mid]) < 0){
+            hi = mid -1;
+         }
+         else if (searchKey.compareTo(dictionary[mid]) > 0){
+            lo = mid + 1;
+         }
+         else{
+            return true;
+         }
+      }
+      return false;
+   }
+
+   public static int findCharScore(char ch){
+      int score = 0;
+      switch (ch){
+      case '_':
+         break;
+      case 'q':
+      case 'z':
+         score = 10;
+         break;
+      case 'j':
+      case 'x':
+         score = 8;
+         break;
+      case 'k':
+         score = 5;
+         break;
+      case 'f':
+      case 'h':
+      case 'v':
+      case 'w':
+      case 'y':
+         score = 4;
+         break;
+      case 'b':
+      case 'c':
+      case 'm':
+      case 'p':
+         score = 3;
+         break;
+      case 'd':
+      case 'g':
+         score = 2;
+         break;
+      default:
+         score = 1;
+         break;
+      }
+      return score;
+   }
+
+   public static int scoreWord(String searchKey){
+      String temp = searchKey.toLowerCase();
+      searchKey = temp;
+      boolean underscore = false;
+      boolean real = false;
+      int score = 0;
+      int index = 0;
+
+      for (int i = 0; i < searchKey.length() & underscore == false; i++){
+         if (searchKey.charAt(i) == '_'){
+            underscore = true;
+            index = i;
+         }
+      }
+
+      if (underscore){
+         real = underScore(searchKey, index);
+      }
+      else{
+         real = isValid(searchKey);
+      }
+
+      if (!real){
+         return 0;
+      }
+
+      for (int j = 0; j < searchKey.length(); j++){
+         int tempScore = findCharScore(searchKey.charAt(j));
+         score += tempScore;
+      }
+      return score;
+   }
+
+   public static int scoreWord(String searchKey, String second){
+      String one = searchKey.toLowerCase();
+      String two = second.toLowerCase();
+
+
+      String temp = searchKey.toLowerCase();
+      searchKey = temp;
+      boolean underscore = false;
+      boolean real = false;
+      int score = 0;
+
+      int i = 0;
+      while (i < searchKey.length() & underscore == false){
+         if (searchKey.charAt(i) == '_'){
+            underscore = true;
+         }
+         i++;
+      }
+
+      if (underscore){
+         real = underScore(searchKey, i);
+      }
+      else{
+         real = isValid(searchKey);
+      }
+
+      if (!real){
+         return 0;
+      }
+
+
+      int letterScore = 0;
+      int wordScore = 0;
+      int tripleWordScore = 0;
+      int doubleWordScore = 0;
+
+      for (int j = 0; j < one.length(); j++){
+         char ch1 = one.charAt(j);
+         char ch2 = two.charAt(j);
+         int scoreOfChar = findCharScore(ch1);
+
+         switch (ch2){
+         case 'd':
+            wordScore += scoreOfChar * 2;
+            break;
+         case 't':
+            wordScore += scoreOfChar * 3;
+            break;
+         case 'T':
+            wordScore += scoreOfChar;
+            tripleWordScore += 1;
+            break;
+         case 'D':
+            wordScore += scoreOfChar;
+            doubleWordScore += 1;
+            break;
+         default:
+            wordScore += scoreOfChar;
+            break;
+         }
+
+         if (j == one.length() -1){
+            for (int k = 0; k < tripleWordScore; k++){
+               wordScore *= 3;
+            }
+
+            for (int l = 0; l < doubleWordScore; l++){
+               wordScore *= 2;
+            }
+         }			
+      }
+      return wordScore;
+   }
+
+   public static void main (String[] args){
+      Stopwatch timer = new Stopwatch();
+      System.out.println("Score: " + scoreWord("cat"));    
+      System.out.println("Time elapsed: " + timer.elapsedTime());
+   }
+
+}
