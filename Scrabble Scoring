@@ -1,0 +1,13 @@
+/* Directions: (Part 1)Write a static method called scoreWord that takes a string as input. This method should take a string of 
+ * upper-case letters including the blank ("_") character. If the given string is a valid word (present in the online dictionary)
+ * it should return its scrabble score (see Wikipedia for tile scores for Scrabble in English). If the string is not a valid word,
+ * it should return 0. Note that the blank character can represent any letter. You may assume that the string will have at most 
+ * one blank character. For example, the method call scoreWord("QUICK") should return a score of 20, but scoreWord("ZXRT") should
+ * return a score of 0 since it's not a valid word.
+ * (Part 2) Write another static method, also called scoreWord, that takes two strings as input. The first string indicates 
+ * the proposed word for scoring (as before). The second string indicates the squares for placing the word. These squares may 
+ * have multipliers for a letter or the whole word. The string representing the squares uses the following codes:
+ * Char Key: 'd' double letter score / 't'	triple letter score / 'D'	double word score / 'T'	triple word score
+ * For any other regular square, don't apply a bonus
+ * Ex: the method call scoreWord("QUICK", "d____T") should return a score of 90
+*/
